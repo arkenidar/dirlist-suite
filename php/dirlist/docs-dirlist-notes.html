@@ -1,0 +1,75 @@
+<?php if (isset($_REQUEST["show-source"])) {
+header('Content-Type: text/plain');
+die(file_get_contents($_SERVER['SCRIPT_FILENAME']));
+} ?>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>directory listing customization in Apache</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+<body>
+
+    <h2>inspiration:</h2>
+    <a
+        href="https://perishablepress.com/better-default-directory-views-with-htaccess/">perishablepress.com/better-default-directory-views-with-htaccess/</a>
+
+    <h2>apache-conf:</h2>
+
+    <pre class="code">
+IndexOptions SuppressHTMLPreamble FancyIndexing
+HeaderName /php/dirlist/dirlist-header.php
+        </pre>
+
+    <h2>shell vscode remote:</h2>
+
+    <pre class="code">
+code /etc/apache2/sites-enabled/000-default-le-ssl.conf
+apachectl restart
+        </pre>
+
+    <h2>php (disabled):</h2>
+    <pre class="code">
+[php $dir = urldecode(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH)); ]
+[= $dir ]
+        </pre>
+
+    <h2>.htaccess</h2>
+
+    <pre class="code">
+
+AddHandler application/x-httpd-php .html
+
+########################
+
+RewriteEngine on
+
+# a directory
+RewriteCond %{REQUEST_FILENAME} -d
+
+# without index files
+RewriteCond %{REQUEST_FILENAME}/index.php !-f
+RewriteCond %{REQUEST_FILENAME}/index.html !-f
+
+# exception case: explicitly use Apache dirlist
+RewriteCond %{REQUEST_FILENAME} !(.*\/_.*)
+
+RewriteRule (.*) php/dirlist/dirlist.php
+
+########################
+        </pre>
+
+    <hr>
+
+    <script src="/web/show-source.js" data-href="/php/dirlist/dirlist.php?show-source"></script>
+    <script src="/web/show-source.js" data-href="/php/dirlist/dirlist-functions.php?show-source"></script>
+    <script src="/web/show-source.js" data-href="/php/dirlist/dirlist-header.php?show-source"></script>
+
+    <hr>
+
+</body>
+
+</html>

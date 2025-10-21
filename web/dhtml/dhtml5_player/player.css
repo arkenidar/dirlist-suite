@@ -1,0 +1,52 @@
+#player_audio,
+#player_video {
+    display: none;
+}
+
+#player_feature {
+    display: none;
+    /* position: sticky;
+    top: 5px; */
+    background: var(--bg);
+    border: 2px solid var(--fg);
+}
+
+:root {
+    --link-border-size: 2px;
+}
+
+a.playable_link {
+    margin: calc(-1 * var(--link-border-size));
+    border: var(--link-border-size) solid transparent;
+}
+
+a.current_link {
+    border-color: var(--fg);
+}
+
+a.download_link {
+    margin-left: var(--link-border-size);
+}
+
+/*
+a.playable_link:before {
+    content: ' ♫ ';
+}
+*/
+
+#player_feature select {
+    border: 1px solid var(--fg);
+}
+
+#player_feature {
+    padding: 5px;
+}
+
+body.download_links_hide a.download_link,
+body.download_links_hide span.link_numbering {
+    display: none;
+}
+
+.no_select {
+    user-select: none;
+}

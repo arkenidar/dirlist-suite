@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>html player</title>
+</head>
+
+<body>
+
+    <p>
+        <a href="https://pixabay.com" target="_blank">pixabay.com</a>
+
+    <ul>
+        <li><a href="velvet-sky-lofi-ambient-231924.mp3">Velvet Sky (LoFi Ambient) by Top-Flow [pixabay.com license]</a>
+        </li>
+        <li><a href="ethereal-horizons-227475.mp3">Ethereal Horizons by Top-Flow [pixabay.com license]</a></li>
+        <li><a href="soil.mp4">video1 (soil)</a></li>
+        <li><a href="ethereal-horizons-227475.mp3">ethereal-horizons-227475.mp3</a></li>
+        <li><a href="soil.mp4">video2 (soil)</a></li>
+    </ul>
+    </p>
+
+    <style>
+        body {
+            --fg: black;
+            --bg: lightgrey;
+        }
+
+        * {
+            background-color: var(--bg);
+            color: var(--fg);
+        }
+
+        li {
+            margin: 5px;
+        }
+
+        a {
+            line-height: 2;
+        }
+    </style>
+
+    <div id="player_feature">
+        <audio controls id="player_audio"></audio>
+        <video controls id="player_video" style="max-width: 400px; height: auto;"></video>
+        <div id="playing"></div>
+
+        <hr>
+        <div>
+            <div><a id="link_to_current_playable" href="#" target="_blank">
+                    Link to the current playable media content . </a></div>
+            <div><label style="user-select: none;">
+                    Do you want to intercept into this media-contents player ?
+                    <input type="checkbox" id="player_intercept" checked>
+                </label></div>
+
+            <div><label style="user-select: none;">
+                    Do you want to show download links ?
+                    <input type="checkbox" id="player_download_links_shown" checked>
+                </label></div>
+
+            <div>
+                <button onclick="ask_for_showing_download_links()"> show download links ? </button>
+            </div>
+            <hr>
+            <div>
+                <span>
+                    After this playable media do .
+                    <select id="after" oninput="json_link()">
+                        <option value="next"> Play *next* media content , after . </option>
+                        <option value="repeat"> *Repeat* the current media content . </option>
+                        <option value="stop"> *Stop* after the end of the current media content . </option>
+                        <option value="playlist"> Repeat this *playlist* of media contents . </option>
+                    </select>
+                </span>
+            </div>
+        </div>
+
+        <script src="player.js"></script>
+        <link rel="stylesheet" href="player.css">
+    </div>
+
+    <hr>
+    <script src="show-source.js" data-href=""></script>
+    <hr>
+    <script src="show-source.js" data-href="player.js"></script>
+    <hr>
+    <script src="show-source.js" data-href="player.css"></script>
+</body>
+
+</html>

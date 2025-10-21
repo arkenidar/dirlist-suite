@@ -1,0 +1,11 @@
+*.webm
+*.mp4
+*.mp3
+*.ogg
+*.opus
+*.m4a
+*.wav
+*.mid
+*.xm
+
+!soil.mp4

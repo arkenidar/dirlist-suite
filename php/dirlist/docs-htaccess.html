@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>.htaccess for dirlist.php</title>
+</head>
+
+<body>
+    <h2>.htaccess for dirlist.php</h2>
+
+    <pre class="code">
+RewriteEngine on
+
+### begin #####################
+# index or action request
+RewriteCond %{REQUEST_URI} /(index|action)$
+RewriteRule (.*) php/dirlist/dirlist.php [L,QSA]
+#### end ####################
+
+### begin #####################
+# a directory
+RewriteCond %{REQUEST_FILENAME} -d
+
+# without index files
+RewriteCond %{REQUEST_FILENAME}/index.php !-f
+RewriteCond %{REQUEST_FILENAME}/index.html !-f
+
+RewriteRule (.*) php/dirlist/dirlist.php [L,QSA]
+#### end ####################
+    </pre>
+
+    <a href="https://arkenidar.com/action?read_file=.htaccess&show_dirlist=">.htaccess of arkenidar.com</a>
+</body>
+
+</html>
