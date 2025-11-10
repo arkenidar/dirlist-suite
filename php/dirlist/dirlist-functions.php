@@ -386,7 +386,7 @@
                     echo "<a href='$index_prefix?read_file=$escaped_entry&show_dirlist='>[text]</a>";
                 } elseif (array_search($ext, ['md']) !== false) {
                     echo "<a href='$index_prefix?read_markdown=$escaped_entry&show_dirlist='>$link_content</a>";
-                } elseif (array_search($ext, ['txt', 'c', 'lua', 'css', 'js', 'json']) !== false) {
+                } elseif (array_search($ext, ['txt', 'c', 'lua', 'css', 'js', 'json', 'sh', 'bash']) !== false) {
                     // link to the text file so it can be viewed in the browser
                     // and a unified link to view the raw text
                     echo "<a href='$index_prefix?read_file=$escaped_entry&show_dirlist='>$link_content [text]</a>";
