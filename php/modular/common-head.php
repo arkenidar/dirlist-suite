@@ -3,7 +3,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="/favicon.png" type="image/png">
     <link rel="shortcut icon" href="/favicon.png" type="image/png">
-    <link rel="stylesheet" href="https://arkenidar.com/sitewide.css">
+    <link rel="stylesheet" href="/sitewide.css">
     <script src="/web/dhtml/color-theme/colors.js"></script>
     <!-- end of common-head.php -->
     <?php

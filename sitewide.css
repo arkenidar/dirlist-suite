@@ -1,0 +1,144 @@
+/* This file is used to style the sitewide CSS for arkenidar.com */
+
+/* @import url('https://fonts.googleapis.com/css2?family=Literata:wght@900&display=swap'); */
+
+html {
+    --bg: white;
+    --fg: black;
+}
+
+* {
+    background-color: var(--bg);
+    color: var(--fg);
+    /* wrap text in all elements */
+    word-wrap: break-word;
+    hyphens: auto;
+}
+
+b {
+    font-weight: bold;
+    text-decoration: none;
+    color: var(--fg);
+    background-color: var(--bg);
+}
+
+html {
+    background-color: var(--bg);
+}
+
+a:before {
+    content: '►[';
+}
+
+a:after {
+    content: ']';
+}
+
+.compact_links a:before {
+    content: '[';
+}
+
+.compact_links a:after {
+    content: ']';
+}
+
+a:before,
+a:after {
+    color: var(--fg);
+}
+
+a {
+    text-decoration: none;
+    color: var(--fg);
+}
+
+input,
+::placeholder {
+    color: var(--fg);
+    background-color: var(--bg);
+}
+
+button,
+input[type=button],
+input[type=submit] {
+    color: var(--fg);
+    background-color: var(--bg);
+    border: 2px outset var(--fg);
+}
+
+input[type=text] {
+    border: 2px solid var(--fg);
+    margin: 2px;
+}
+
+/*
+pre,
+pre * {
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: bold;
+}
+*/
+
+textarea,
+pre[contenteditable].show_source {
+    color: var(--fg);
+    background-color: var(--bg);
+}
+
+pre {
+    overflow: auto;
+}
+
+ul {
+    padding: 10px;
+    margin: 10px;
+}
+
+.show_source {
+    /* width: fit-content; */
+    width: auto;
+    max-height: 50vh;
+
+    /* wrap long lines */
+    word-wrap: break-word;
+    white-space: pre-wrap;
+}
+
+b>a {
+    color: var(--fg);
+}
+
+b>a:before {
+    content: '';
+}
+
+b>a:after {
+    content: '';
+}
+
+a.playable_link:before {
+    content: '►[ ♫ ';
+}
+
+a {
+    line-height: 1.8;
+}
+
+hr {
+    border-color: var(--fg);
+}
+
+audio {
+    color-scheme: dark;
+}
+
+select {
+    /* full width of container */
+    width: 100%;
+    /* allow shrinking below default */
+    min-width: 0;
+    /* overflow handling */
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
