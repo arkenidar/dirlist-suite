@@ -1,0 +1,130 @@
+# .htaccess file for arkenidar.com
+# This file is used to configure Apache web server settings for the arkenidar.com domain.
+# It includes rules for URL rewriting, directory listings, and file handling.
+# It is placed in the root directory of the website to apply these settings globally.
+# Note: This file is not used for the arkenidar.com/var directory, which has its own .htaccess file.
+
+### @marker-show-source@ to mark this file to be :
+### https://github.arkenidar.com/action?show_source=.htaccess
+
+###########################################################
+# main handling of the site
+###########################################################
+
+RewriteEngine on
+
+# block : ".git" sub-directories protection from access
+RewriteRule ^(.*/)?\.git(/.*)?$ - [F,L]
+
+########################
+# index or action request
+RewriteCond %{REQUEST_URI} /(index|action)$
+RewriteRule (.*) php/dirlist/dirlist.php [L,QSA]
+########################
+
+########################
+# a directory
+RewriteCond %{REQUEST_FILENAME} -d
+
+# without index files
+RewriteCond %{REQUEST_FILENAME}/index.php !-f
+RewriteCond %{REQUEST_FILENAME}/index.html !-f
+
+# exception case: explicitly use Apache dirlist
+RewriteCond %{REQUEST_URI} !(^|/)_
+# no path segment that starts with '_'
+
+RewriteRule (.*) php/dirlist/dirlist.php [L,QSA]
+########################
+
+# .html and .htm files made properly downloadable
+# (see mobile edge mis-using blink for handling downloads)
+
+<FilesMatch "\.html?$" >
+    ForceType text/html
+    ### a2enmod headers && systemctl restart apache2
+    # Prevent caching to ensure headers are always fresh
+    Header always set Cache-Control "no-cache, no-store, must-revalidate"
+    Header always set Pragma "no-cache"
+    Header always set Expires "0"
+    
+    # Alternative approach using RewriteEngine
+    RewriteEngine On
+    RewriteCond %{QUERY_STRING} (^|&)download($|&|=) [NC]
+    RewriteRule .* - [E=FORCE_DOWNLOAD:1]
+    
+    # Set environment variable if download parameter is present (with optional value)
+    SetEnvIf Query_String "download" has_download
+    # Only set download header if 'download' parameter is present
+    Header always set Content-Disposition "attachment" env=has_download
+    Header always set Content-Disposition "attachment" env=FORCE_DOWNLOAD
+    # Debug header to confirm parameter detection
+    Header always set X-Download-Detected "yes" env=has_download
+    Header always set X-Download-Detected-Alt "yes" env=FORCE_DOWNLOAD
+</FilesMatch>
+
+###########################################################
+
+# .love files made properly downloadable
+# https://love2d.org/wiki/Downloadable_files
+<FilesMatch "\.love$" >
+    ForceType application/octet-stream
+    ### a2enmod headers && systemctl restart apache2
+    Header set Content-Disposition attachment
+</FilesMatch>
+
+###########################################################
+
+# C.O.R.S. setup
+# https://stackoverflow.com/questions/32273606/how-to-enable-cors-for-apache-httpd-server-step-by-step-process
+# edit your conf/httpd.conf file.  Verify that the headers module is loaded
+#LoadModule headers_module modules/mod_headers.so
+# to whitelist every origin, use
+############Header set Access-Control-Allow-Origin "*"
+
+AddDefaultCharset UTF-8
+
+<FilesMatch "\.txt$" >
+    Header set Content-type "text/plain; charset=utf-8"
+</FilesMatch>
+
+<FilesMatch "\.md$" >
+    Header set Content-type "text/plain; charset=utf-8"
+</FilesMatch>
+
+<FilesMatch "\.css$" >
+    Header set Content-type "text/css; charset=utf-8"
+</FilesMatch>
+
+<FilesMatch "\.js$" >
+    Header set Content-type "text/javascript; charset=utf-8"
+</FilesMatch>
+
+# Disable CSS caching completely
+<FilesMatch "\.css$">
+    Header set Cache-Control "no-cache, no-store, must-revalidate"
+    Header set Pragma "no-cache"
+    Header set Expires "0"
+</FilesMatch>
+
+# Disable JS caching completely
+<FilesMatch "\.js$">
+    Header set Cache-Control "no-cache, no-store, must-revalidate"
+    Header set Pragma "no-cache"
+    Header set Expires "0"
+</FilesMatch>
+
+# disable all caching
+<FilesMatch ".*">
+    Header set Cache-Control "no-cache, no-store, must-revalidate"
+    Header set Pragma "no-cache"
+    Header set Expires "0"
+</FilesMatch>
+
+## section for : block
+
+# block downloads of *.sqlite files (private)
+<FilesMatch "\.(sqlite|sqlite3|db)$">
+    Require all denied
+</FilesMatch>
+
