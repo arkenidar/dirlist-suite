@@ -8,7 +8,7 @@ document.addEventListener("DOMContentLoaded", player_initialize)
 function player_initialize() {
     var links = document.querySelectorAll("a[href]")
     const video_extensions = ["mp4", "webm"]
-    const audio_extensions = ["mp3", "3gp", "ogg", "opus", "m4a", "wav", "mid", "xm"]
+    const audio_extensions = ["mp3", "3gp", "ogg", "opus", "m4a", "flac", "wav", "mid", "xm"]
     const playable_extensions = audio_extensions.concat(video_extensions)
     const linksFilterCriterion = link =>
         playable_extensions.some(
@@ -84,7 +84,7 @@ function player_initialize() {
         if (video_extensions.some(file_extension => link.href.endsWith(`.${file_extension}`))) {
             const button = document.createElement("button")
             button.innerText = "video"
-            button.onclick = event => { location.assign(event.target.parentElement.href); return false }
+            button.onclick = event => { location.assign(event.currentTarget.parentElement.href); return false }
             link.prepend(button)
         }
 
@@ -109,7 +109,7 @@ function player_initialize() {
                 player_audio.pause();
                 player_video.pause();
             } else
-                link_play(event.target);
+                link_play(event.currentTarget);
             return !player_intercept.checked;
         }
     } // for link_index in links
