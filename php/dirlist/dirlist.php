@@ -136,6 +136,10 @@ $show_directory = true;
 if (isset($_GET['read_file']))
     $show_directory = false;
 
+// if the user wants to read a markdown file, we will not show the directory listing
+if (isset($_GET['read_markdown']))
+    $show_directory = false;
+
 // exception: if the user wants to read a file and also list the directory
 if (isset($_GET['show_dirlist']))
     $show_directory = true;
