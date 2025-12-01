@@ -277,7 +277,7 @@ if ($file_name) {
         <script src="/app/lib/html-markdown/markdown.js"></script>
         <div class="markdown-url" data-url="<?= $safe_web_url ?>"></div>
         <hr>
-        <a href='<?= "action?read_file=$safe_web_url&show_dirlist=" ?>'> View raw markdown file </a>
+        <a href='<?= "action?read_file=$safe_web_url" ?>'> View raw markdown file </a>
         <hr>
     <?php
     } // end if ext === 'md'
@@ -294,7 +294,7 @@ if ($file_name) {
         <script src="/web/show-source.js" data-href="<?= $safe_web_url ?>"></script>
         <hr>
         <?php if (isset($_GET['read_file']) && in_array($ext, ['md'])) { ?>
-            <a href='<?= "action?read_markdown=$safe_web_url&show_dirlist=" ?>'> View rendered markdown file </a>
+            <a href='<?= "action?read_markdown=$safe_web_url" ?>'> View rendered markdown file </a>
             <hr>
         <?php } ?>
     <?php
