@@ -291,7 +291,22 @@ if ($file_name) {
             $safe_web_url = "action?show_source=$safe_web_url";
         }
     ?>
-        <script src="/web/show-source.js" data-href="<?= $safe_web_url ?>"></script>
+        <div id="read_file_reader">
+            <script src="/web/show-source.js" data-href="<?= $safe_web_url ?>"></script>
+        </div>
+        <style>
+            /* apply to the element that
+             has a .text_viewer as next sibling */
+            .stickyTop,
+            #read_file_reader *:has(+ .text_viewer) {
+                /* make the header sticky */
+                position: sticky;
+                top: 0;
+                /* for position: sticky;
+                You must specify at least 
+                one of top, right, bottom, or left */
+            }
+        </style>
         <hr>
         <?php if (isset($_GET['read_file']) && in_array($ext, ['md'])) { ?>
             <a href='<?= "action?read_markdown=$safe_web_url" ?>'> View rendered markdown file </a>
