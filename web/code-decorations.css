@@ -1,0 +1,38 @@
+/* Syntax highlighting colors */
+
+/* Tag coloring */
+
+.tag,
+.tag-inside {
+    color: blue;
+}
+
+.tag-name,
+.tag {
+    font-weight: bold;
+}
+
+.tag-name,
+.tag {
+    color: darkblue;
+}
+
+/* Source code coloring */
+
+.source-coloring {
+    color: red;
+    font-weight: bold;
+}
+
+.source-underline {
+    text-decoration: underline;
+}
+
+.source-keyword {
+    color: green;
+}
+
+.source-comment {
+    color: gray;
+    font-style: italic;
+}

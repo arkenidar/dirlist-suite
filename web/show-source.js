@@ -14,24 +14,8 @@ style=" overflow-y: scroll; border:1px solid black; padding: 1em; "
 spellcheck="false" translate="no">
 </pre>
 
-<style>
-/* Syntax highlighting colors */
-
-.tag,
-.tag-inside {
-    color: blue;
-}
-
-.tag-name,
-.tag {
-    font-weight: bold;
-}
-
-.tag-name,
-.tag {
-    color: darkblue;
-}
-</style>
+<link rel="stylesheet" href="/web/code-decorations.css">
+<script src="/web/code-decorations.js"></script>
 
 </div>`
 
@@ -42,42 +26,29 @@ spellcheck="false" translate="no">
     fetch(url).then(response => response.text()).
         then(response_text => {
             text_viewer.textContent = response_text
-            text_coloring(text_viewer)
+
+            // code_decorations()
+
+            // inject code-decorations.js code here
+            // to color the source code in the text_viewer element
+            var scriptElement = document.createElement("script")
+            scriptElement.src = "/web/code-decorations.js"
+            text_viewer.appendChild(scriptElement)
+
+            // execute the code-decorations.js code to color the source code in the text_viewer element
+            // execute the code after the script is loaded
+            scriptElement.onload = function () {
+                code_decorations()
+            }
+
         })
 
-    function text_parsing(html) {
+    function code_decorations() {
 
-        // begin with escapings
-        html = html.replaceAll('&', "&amp;") // HTML entities escaping
-        html = html.replaceAll('-tag' + '}', '-tag' + '&#x7d;') // {open-tag} {close-tag} escaping
-        html = html.replaceAll("?>", "?&gt;") // for PHP tags escaping
+        text_coloring(text_viewer, text_viewer.textContent)
 
-        html = html.replaceAll("<", "{open-tag}")
-        html = html.replaceAll(">", "{close-tag}")
-
-        // stricter : only <az> or </az> tags are matched ( also see PHP tags escaping above )
-        html = html.replaceAll(/{open-tag}(\/?[a-zA-Z][\s\S]*?){close-tag}/g,
-            "<span class='tag'>&lt;</span>"
-            + "<span class='tag-inside'>$1</span>"
-            + "<span class='tag'>&gt;</span>")
-
-        html = html.replaceAll("{open-tag}", "&lt;") // <
-        html = html.replaceAll("{close-tag}", "&gt;") // >
-
-        return html
     }
 
-    function text_coloring(text_viewer) {
-
-        var html = text_viewer.textContent
-
-        html = text_parsing(html)
-
-        text_viewer.innerHTML = html
-
-        for (var tagInside of text_viewer.querySelectorAll(".tag-inside")) {
-            tagInside.innerHTML = tagInside.innerHTML.replace(/^(\/?\w+)(.*)/, "<span class='tag-name'>$1</span>$2")
-        }
-    }
+    // The end of the IIFE
 
 })()
