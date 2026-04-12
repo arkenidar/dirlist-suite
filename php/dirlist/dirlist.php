@@ -7,6 +7,10 @@ if (isset($_REQUEST["show-source"])) {
 ?>
 <?php
 
+header('X-Content-Type-Options: nosniff');
+header('X-Frame-Options: SAMEORIGIN');
+header('Referrer-Policy: same-origin');
+
 // @marker-show-source@
 // https://arkenidar.com/php/dirlist/?show_source=dirlist.php
 
