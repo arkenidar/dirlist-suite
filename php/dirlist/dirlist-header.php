@@ -274,8 +274,8 @@ if ($file_name) {
     <?php
     if (isset($_GET['read_markdown']) && $ext === 'md') {
     ?>
-        <script src="/app/lib/html-markdown/markdown.js"></script>
         <div class="markdown-url" data-url="<?= $safe_web_url ?>"></div>
+        <script src="/app/lib/html-markdown/markdown.js"></script>
         <hr>
         <a href='<?= "action?read_file=$safe_web_url" ?>'> View raw markdown file </a>
         <hr>
