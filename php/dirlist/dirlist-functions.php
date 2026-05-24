@@ -189,6 +189,31 @@
         return "not allowed nor disallowed";
     } // end function is_directory_allowed_to_show
 
+    /**
+     * Detects if the current request is HTTPS or HTTP.
+     * Works behind proxies/load balancers if configured correctly.
+     */
+
+    function getRequestScheme()
+    {
+        // Check standard HTTPS indicator
+        if (!empty($_SERVER['HTTPS']) && strtolower($_SERVER['HTTPS']) !== 'off') {
+            return 'https';
+        }
+
+        // Check for proxy/load balancer headers
+        if (!empty($_SERVER['HTTP_X_FORWARDED_PROTO']) && strtolower($_SERVER['HTTP_X_FORWARDED_PROTO']) === 'https') {
+            return 'https';
+        }
+
+        if (!empty($_SERVER['HTTP_FRONT_END_HTTPS']) && strtolower($_SERVER['HTTP_FRONT_END_HTTPS']) !== 'off') {
+            return 'https';
+        }
+
+        // Default to HTTP
+        return 'http';
+    }
+
     function directory_listing($path_to_list = "")
     {
         // list the directory contents
@@ -295,6 +320,8 @@
 
         print("<ul class='directory-listing'>\n");
 
+        $absolute_raw_link_prefix = getRequestScheme() . '://' . $_SERVER['HTTP_HOST'] . $path_to_list;
+
         foreach ($entries as $entry) {
 
             // start output buffering to capture echo output
@@ -377,6 +404,9 @@
                 $ext = strtolower(pathinfo($entry, PATHINFO_EXTENSION));
 
                 $index_prefix = "action";
+
+                if (isset($_REQUEST["raw"]))
+                    echo "<a href='$absolute_raw_link_prefix$escaped_entry'>[raw]</a> &mdash; "; // $link_content
 
                 // determine link behavior based on file extension
                 if (array_search($ext, ['html', 'htm', 'svg']) !== false) {
