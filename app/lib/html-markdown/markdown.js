@@ -1,36 +1,25 @@
-var showdownScript = document.createElement("script");
+var markedScript = document.createElement("script");
 
 // When the script is loaded, set up the markdown viewers
 if (typeof markdownContentLoaded === "function") {
-  showdownScript.onload = markdownContentLoaded;
+  markedScript.onload = markdownContentLoaded;
 } else {
-  showdownScript.onload = processMarkdownElements;
+  markedScript.onload = processMarkdownElements;
 }
 
-///showdownScript.src = 'https://cdn.jsdelivr.net/npm/showdown@2.1.0/dist/showdown.min.js'
-///showdownScript.src = 'https://arkenidar.com/app/lib/html-markdown/showdown.min.js'
-showdownScript.src =
-  "https://arkenidar.github.io/html-markdown/showdown.min.js";
+markedScript.src = "https://cdn.jsdelivr.net/npm/marked/marked.min.js";
 
 // Insert the script after the current script tag
-document.currentScript.insertAdjacentElement("afterend", showdownScript);
+document.currentScript.insertAdjacentElement("afterend", markedScript);
 
 async function processMarkdownElements() {
-  // Now we can use showdown
-  // note: init showdown converter with options if needed
-  // ref: https://github.com/showdownjs/showdown
-  var showdownConverter = new showdown.Converter({
-    tables: true,
-    simplifiedAutoLink: true,
-    strikethrough: true,
-    tasklists: true,
-  });
-
   function viewContent(content, node) {
     node.insertAdjacentElement("afterend", document.createElement("div"));
     node.style.display = "none";
     var newNode = node.nextSibling;
-    newNode.innerHTML = showdownConverter.makeHtml(content);
+    var markdown = content;
+    var html = marked.parse(markdown);
+    newNode.innerHTML = html;
     newNode.className = "markdown-to-html";
   }
 
