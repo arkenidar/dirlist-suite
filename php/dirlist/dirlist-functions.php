@@ -8,7 +8,7 @@
     // @marker-show-source@
     // https://arkenidar.com/php/dirlist/?show_source=dirlist-functions.php
 
-    function is_allowed_to_show($file_path)
+    function is_allowed_to_show(string $file_path)
     {
         // determine the file extension
         $ext = strtolower(pathinfo($file_path, PATHINFO_EXTENSION));
@@ -84,7 +84,7 @@
         return "not allowed nor disallowed";
     }
 
-    function is_marked_to_show($file_path)
+    function is_marked_to_show(string $file_path)
     {
         // check first if the file is explicitly allowed or disallowed via index.allow
         // if allowed, return true
@@ -136,7 +136,7 @@
         return $show_condition && !$hide_condition;
     }
 
-    function is_directory_allowed_to_show($directory_path, $index_allow_file)
+    function is_directory_allowed_to_show(string $directory_path, string $index_allow_file)
     {
         // check if the directory is allowed to show based on index.allow file
         ///$index_allow_file = $directory_path . '/index.allow';
